@@ -21,8 +21,8 @@ This project implements a Vue 3 frontend styled with Tailwind CSS v4 for managin
 - Table filtering with live search and status badge styling.
 - GitHub Actions CI pipeline running automated build checks.
 
-- Installation and Run
-- Instructions
+Installation and Run
+Instructions
   1. Clone the repository: git clone
      https://github.com/Johndeelagman/lagman-module7-student-system
   2. Go to the project folder cd lagman module7-vue-system
