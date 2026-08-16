@@ -2,6 +2,8 @@
 
 **Developer:** John Dee  
 **Section:** BSCS-3A  
+**Subject:** Software Engineering 1
+**Module:** Module 7 - Design Implementation
 
 ---
 
