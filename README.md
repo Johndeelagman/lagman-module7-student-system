@@ -1,5 +1,20 @@
-# Vue 3 + Vite
+# Module 7: Student Management System
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+**Developer:** John Dee  
+**Section:** BSCS-3A  
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+---
+
+## Overview
+This project implements a Vue 3 frontend styled with Tailwind CSS v4 for managing student records. It transitions the theoretical data architecture established in **Module 6** into an interactive web application.
+
+## Architectural Connection: Module 6 to Module 7
+- **Data Entity Integration:** The `Student` entity schema developed in Module 6 (`studentId`, `fullName`, `program`, `yearLevel`, and `status`) serves as the core data structure driving Vue's reactive state.
+- **Modular Component Design:** The system breaks down Module 6's interface requirements into four modular components (`AppHeader`, `StudentForm`, `StudentTable`, `AppFooter`).
+- **CRUD & Validation Logic:** Data flow between parent (`App.vue`) and child components uses reactive props and event emissions (`$emit`), ensuring real-time state synchronization and client-side validation.
+
+## Features
+- Dynamic header with active status and live record counting.
+- Input validation with real-time error messaging.
+- Table filtering with live search and status badge styling.
+- GitHub Actions CI pipeline running automated build checks.
