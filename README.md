@@ -20,3 +20,12 @@ This project implements a Vue 3 frontend styled with Tailwind CSS v4 for managin
 - Input validation with real-time error messaging.
 - Table filtering with live search and status badge styling.
 - GitHub Actions CI pipeline running automated build checks.
+
+- Installation and Run
+- Instructions
+  1. Clone the repository: git clone
+     https://github.com/Johndeelagman/lagman-module7-student-system
+  2. Go to the project folder cd lagman module7-vue-system
+  3. Install dependencies: npm install
+  4. Run the app: npm run dev
+  5. Open the local address shown in the terminal example:  http://localhost:5183/  
