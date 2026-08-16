@@ -1,6 +1,6 @@
 # Module 7: Student Management System
 
-- **Developer:** John Dee  
+- **Developer:** John Dee P. Lagman 
 - **Section:** BSCS-3A  
 - **Subject:** Software Engineering 1
 - **Module:** Module 7 - Design Implementation
