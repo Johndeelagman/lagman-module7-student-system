@@ -38,3 +38,4 @@ The **Student Record System** is a responsive, web-based dashboard designed to m
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/Johndeelagman/lagman-module7-student-system](https://github.com/Johndeelagman/lagman-module7-student-system)
+http://localhost:5173/
