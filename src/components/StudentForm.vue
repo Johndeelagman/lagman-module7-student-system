@@ -1,21 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const emit = defineEmits(['save-student'])
-
 const props = defineProps({
   editingStudent: { type: Object, default: null }
 })
 
 const form = ref({
-  studentId: props.editingStudent?.studentId || '',
-  fullName: props.editingStudent?.fullName || '',
-  program: props.editingStudent?.program || 'BSCS',
-  yearLevel: props.editingStudent?.yearLevel || '1st Year',
-  status: props.editingStudent?.status || 'Enrolled'
+  studentId: '',
+  fullName: '',
+  program: 'BSCS',
+  yearLevel: '1st Year',
+  status: 'Enrolled'
 })
 
 const errors = ref({})
+
+watch(() => props.editingStudent, (newVal) => {
+  if (newVal) form.value = { ...newVal }
+}, { immediate: true })
 
 const validate = () => {
   errors.value = {}
@@ -33,69 +36,82 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="bg-white p-5 rounded-lg shadow-md space-y-4 border border-gray-100">
-    <h2 class="text-lg font-bold text-gray-800 border-b pb-2">
-      {{ editingStudent ? 'Edit Student Record' : 'Register New Student' }}
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm p-6 transition-colors duration-300">
+    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 mb-5">
       <div>
-        <label class="block text-xs font-medium text-gray-700 mb-1">Student ID</label>
-        <input 
-          v-model="form.studentId" 
-          type="text" 
-          placeholder="e.g. 2026-0001" 
-          :disabled="!!editingStudent"
-          class="w-full border rounded-md p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-          :class="errors.studentId ? 'border-red-500' : 'border-gray-300'"
-        />
-        <p v-if="errors.studentId" class="text-red-500 text-xs mt-1">{{ errors.studentId }}</p>
+        <h2 class="text-base font-semibold text-slate-900 dark:text-white">
+          {{ editingStudent ? 'Update Student Record' : 'Register New Student' }}
+        </h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Fill in the required academic credentials below</p>
+      </div>
+      <span class="text-xs text-slate-400 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700">
+        {{ editingStudent ? 'Editing Mode' : 'New Entry' }}
+      </span>
+    </div>
+
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Student ID</label>
+          <input 
+            v-model="form.studentId" 
+            type="text" 
+            placeholder="e.g. 2026-0001" 
+            :disabled="!!editingStudent"
+            class="w-full bg-slate-50 dark:bg-slate-800/60 border rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 disabled:opacity-60 disabled:cursor-not-allowed"
+            :class="errors.studentId ? 'border-rose-400 focus:ring-rose-500/20 focus:border-rose-500' : 'border-slate-200 dark:border-slate-700'"
+          />
+          <p v-if="errors.studentId" class="text-rose-500 dark:text-rose-400 text-xs mt-1 font-medium">{{ errors.studentId }}</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Full Name</label>
+          <input 
+            v-model="form.fullName" 
+            type="text" 
+            placeholder="e.g. Juan Cruz" 
+            class="w-full bg-slate-50 dark:bg-slate-800/60 border rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+            :class="errors.fullName ? 'border-rose-400 focus:ring-rose-500/20 focus:border-rose-500' : 'border-slate-200 dark:border-slate-700'"
+          />
+          <p v-if="errors.fullName" class="text-rose-500 dark:text-rose-400 text-xs mt-1 font-medium">{{ errors.fullName }}</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Academic Program</label>
+          <select v-model="form.program" class="w-full bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+            <option class="dark:bg-slate-900">BSCS</option>
+            <option class="dark:bg-slate-900">BSIT</option>
+            <option class="dark:bg-slate-900">BSEMC</option>
+            <option class="dark:bg-slate-900">BSIS</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Year Level</label>
+          <select v-model="form.yearLevel" class="w-full bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+            <option class="dark:bg-slate-900">1st Year</option>
+            <option class="dark:bg-slate-900">2nd Year</option>
+            <option class="dark:bg-slate-900">3rd Year</option>
+            <option class="dark:bg-slate-900">4th Year</option>
+          </select>
+        </div>
       </div>
 
       <div>
-        <label class="block text-xs font-medium text-gray-700 mb-1">Full Name</label>
-        <input 
-          v-model="form.fullName" 
-          type="text" 
-          placeholder="e.g. Juan Cruz" 
-          class="w-full border rounded-md p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-          :class="errors.fullName ? 'border-red-500' : 'border-gray-300'"
-        />
-        <p v-if="errors.fullName" class="text-red-500 text-xs mt-1">{{ errors.fullName }}</p>
-      </div>
-
-      <div>
-        <label class="block text-xs font-medium text-gray-700 mb-1">Program</label>
-        <select v-model="form.program" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-          <option>BSCS</option>
-          <option>BSIT</option>
-          <option>BSEMC</option>
-          <option>BSIS</option>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Enrollment Status</label>
+        <select v-model="form.status" class="w-full bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
+          <option class="dark:bg-slate-900">Enrolled</option>
+          <option class="dark:bg-slate-900">Inactive</option>
+          <option class="dark:bg-slate-900">On Leave</option>
         </select>
       </div>
 
-      <div>
-        <label class="block text-xs font-medium text-gray-700 mb-1">Year Level</label>
-        <select v-model="form.yearLevel" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-          <option>1st Year</option>
-          <option>2nd Year</option>
-          <option>3rd Year</option>
-          <option>4th Year</option>
-        </select>
-      </div>
-    </div>
-
-    <div>
-      <label class="block text-xs font-medium text-gray-700 mb-1">Status</label>
-      <select v-model="form.status" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-        <option>Enrolled</option>
-        <option>Inactive</option>
-        <option>On Leave</option>
-      </select>
-    </div>
-
-    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-md text-sm transition">
-      {{ editingStudent ? 'Update Student' : 'Add Student' }}
-    </button>
-  </form>
+      <button 
+        type="submit" 
+        class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-medium py-2.5 rounded-xl text-sm transition-all shadow-sm active:scale-[0.99] mt-2 cursor-pointer"
+      >
+        {{ editingStudent ? 'Save Changes' : 'Submit Record' }}
+      </button>
+    </form>
+  </div>
 </template>
