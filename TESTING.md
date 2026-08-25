@@ -31,3 +31,51 @@ This document details the manual test suite executed for **Phase 3 validation**.
 
 > **Environment Tested:** Chrome v128+ / Node v20+ / Windows 11  
 > **Last Run:** August 25, 2026
+
+### 🐛 Defect Report: `BUG-01`
+
+| Field | Details |
+| :--- | :--- |
+| **Bug ID** | `BUG-01` |
+| **Title** | Validation permits whitespace-only input strings |
+| **Severity** | 🟡 **Medium** |
+| **Component** | Form Validation / State Management |
+| **Status** | 🟢 **Resolved** |
+
+---
+
+#### 📌 Overview & Lifecycle
+
+**Description**  
+The record input field fails to sanitize whitespace characters. Entering empty spaces (e.g., `"   "`) bypasses frontend validation checks, allowing blank records to be saved to state and rendered in the UI.
+
+<details>
+<summary><b>🔍 Reproduction Steps</b></summary>
+
+1. Open the **Record Entry Form**.
+2. Click on the input field and press the Spacebar three times (`"   "`).
+3. Click **Submit**.
+
+</details>
+
+---
+
+#### ⚖️ Expected vs. Actual Results
+
+| Expected Behavior | Actual Behavior |
+| :--- | :--- |
+| Form rejects submission and displays validation error: <br>`"Name cannot be empty."` | Form accepts input and appends an invisible/blank record to the list. |
+
+---
+
+#### 🛠️ Resolution & Code Patch
+
+<details>
+<summary><b>View Code Fix (Before vs. After)</b></summary>
+
+**Failing Code (`src/utils/app.js`):**
+```javascript
+// ❌ Allows whitespace strings because string length > 0
+if (!newItem.name) {
+  throw new Error("Name is required");
+}
