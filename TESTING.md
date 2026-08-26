@@ -78,8 +78,8 @@ The record input field fails to sanitize whitespace characters. Entering empty s
 ## QA Re-Test Report: [BUG-ID] - [Bug Name]
 
 - **Environment:** Staging v2.4.1
-- **Tested By:** [Your Name]
-- **Date:** [Date]
+- **Tested By:** [John Dee P. Lagman]
+- **Date:** [26/08/26]
 - **Re-Test Status:** PASSED (Closed)
 
 ### Summary
