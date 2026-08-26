@@ -95,3 +95,17 @@ The record input field fails to sanitize whitespace characters. Entering empty s
 ### Evidence
 ![Re-test Screenshot](./06-successful-retesting.png)
 *Caption: Dark mode toggle active state and updated UI rendering correctly.*
+## 🧪 Manual Test Cases
+
+| Test ID | Feature | Test Step / Description | Expected Result | Status |
+| :--- | :--- | :--- | :--- | :---: |
+| **TC-01** | Registration | Fill form with valid details and submit | Record added to table | `PASS` |
+| **TC-02** | Registration | Submit form with empty required fields | Form displays validation errors | `PASS` |
+| **TC-03** | Edit Record | Open modal, modify program name, save | Updated program name reflects in table | `PASS` |
+| **TC-04** | Edit Record | Open modal, clear required field, save | Submit blocked, validation error shown | `PASS` |
+| **TC-05** | Delete Record | Click delete icon on a student row | Confirmation modal appears | `PASS` |
+| **TC-06** | Delete Record | Click "Confirm Delete" in modal | Record removed from table | `PASS` |
+| **TC-07** | Search | Enter "Alice" in search field | Table filters to show only "Alice" | `PASS` |
+| **TC-08** | Search | Enter non-existent ID "99999" | Table displays "No records found" message | `PASS` |
+| **TC-09** | Theme Toggle | Click Theme Toggle button in header | UI changes background theme | `PASS` |
+| **TC-10** | Persistence | Refresh page after toggling theme | Saved theme preference persists | `PASS` |
