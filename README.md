@@ -39,3 +39,14 @@ The **Student Record System** is a responsive, web-based dashboard designed to m
    ```bash
    git clone [https://github.com/Johndeelagman/lagman-module7-student-system](https://github.com/Johndeelagman/lagman-module7-student-system)
 http://localhost:5173/
+## 🐛 Defect Report
+
+| Field | Details |
+| :--- | :--- |
+| **Bug ID** | `BUG-01` |
+| **Title** | Student ID validation accepts special characters |
+| **Severity** | Medium |
+| **Steps to Reproduce** | 1. Open "Add Student" modal.<br>2. Enter `@#$%^&` into Student ID field.<br>3. Click "Submit". |
+| **Expected Result** | Form displays error: "Student ID must contain alphanumeric characters only." |
+| **Actual Result** | Form submits successfully and saves invalid characters to the database. |
+| **Status** | Resolved |
