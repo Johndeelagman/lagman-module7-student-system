@@ -50,3 +50,35 @@ http://localhost:5173/
 | **Expected Result** | Form displays error: "Student ID must contain alphanumeric characters only." |
 | **Actual Result** | Form submits successfully and saves invalid characters to the database. |
 | **Status** | Resolved |
+### 🛠️ Explanation of Correction Made
+
+* **Root Cause:** The `studentId` field in `AddStudentModal.vue` lacked input validation rules, allowing raw form submission regardless of character types or patterns.
+* **Fix Implemented:** Added regex pattern matching (`/^[a-zA-Z0-9-]+$/`) to validate input before emitting the `add-student` event. If the input contains invalid special characters, submission is blocked and an inline validation error is displayed.
+* **Code Snippet (Before vs. After):**
+
+```javascript
+// BEFORE: Allowed all string inputs
+const handleSubmit = () => {
+  emit('add-student', formData);
+};
+
+// AFTER: Added regex validation check
+const handleSubmit = () => {
+  const idPattern = /^[a-zA-Z0-9-]+$/;
+  if (!idPattern.test(formData.studentId)) {
+    errorMessage.value = "Student ID must contain alphanumeric characters only.";
+    return;
+  }
+  emit('add-student', formData);
+};
+---
+
+**Where to Put It in Your Repository Hierarchy:**
+
+```text
+README.md
+ ├── 🧪 Manual Test Cases (TC-01 to TC-10)
+ ├── 🐛 Defect Report (BUG-01)
+ ├── 🛠️ Explanation of Correction Made  <-- [ Put it here ]
+ ├── 🔄 Retesting & Regression Results
+ └── 📸 Screenshots & Explanations
