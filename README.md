@@ -82,3 +82,26 @@ README.md
  ├── 🛠️ Explanation of Correction Made  <-- [ Put it here ]
  ├── 🔄 Retesting & Regression Results
  └── 📸 Screenshots & Explanations
+### 🔄 Retesting and Regression Testing Results
+
+#### 1. Retesting Results (BUG-01)
+* **Action:** Re-executed test case `TC-01` and `TC-02` with invalid inputs (`@#$%^&`).
+* **Result:** **PASSED**. The form now successfully rejects invalid Student IDs, blocks submission, and displays the correct validation error message.
+
+#### 2. Regression Testing Results
+* **Scope:** Re-ran all remaining manual test cases (`TC-01` through `TC-10`) and automated unit test suite (`5/5 passed`).
+* **Result:** **PASSED**. The code fix for Student ID validation did not break or alter existing functionalities (Edit, Delete, Search, and Theme Toggle).
+
+| Test Type | Executed | Passed | Failed | Status |
+| :--- | :---: | :---: | :---: | :---: |
+| **Defect Retest (BUG-01)** | 1 | 1 | 0 | `PASSED` |
+| **Manual Suite Regression** | 10 | 10 | 0 | `PASSED` |
+| **Automated Unit Tests** | 5 | 5 | 0 | `PASSED` |
+
+Plaintext
+README.md
+ ├── 🧪 Manual Test Cases (TC-01 to TC-10)
+ ├── 🐛 Defect Report (BUG-01)
+ ├── 🛠️ Explanation of Correction Made
+ ├── 🔄 Retesting & Regression Results  <-- [ Put it here ]
+ └── 📸 Screenshots & Explanations
