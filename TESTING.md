@@ -109,3 +109,11 @@ The record input field fails to sanitize whitespace characters. Entering empty s
 | **TC-08** | Search | Enter non-existent ID "99999" | Table displays "No records found" message | `PASS` |
 | **TC-09** | Theme Toggle | Click Theme Toggle button in header | UI changes background theme | `PASS` |
 | **TC-10** | Persistence | Refresh page after toggling theme | Saved theme preference persists | `PASS` |
+<details>
+<summary><b>View Manual Test Cases (TC-01 to TC-10)</b></summary>
+
+| Test ID | Feature | Test Step / Description | Expected Result | Status |
+| :--- | :--- | :--- | :--- | :---: |
+| **TC-01** | Registration | Fill form with valid details and submit | Record added to table | `PASS` |
+...
+</details>
