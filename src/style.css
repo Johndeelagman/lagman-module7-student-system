@@ -1,54 +1,26 @@
 @import "tailwindcss";
 
-/* Responsive adjustments for smaller screens (768px and below) */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #0f172a;
+  color: #f8fafc;
+  margin: 0;
+  padding: 0;
+}
+
+svg {
+  max-width: 24px;
+  max-height: 24px;
+}
+
 @media screen and (max-width: 768px) {
-  /* Header section layout */
   header, .navbar {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
-  
+
   .header-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  /* Form layout adjustments */
-  .form-grid, .form-row {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  /* Form container padding */
-  .card, .form-container {
-    padding: 16px;
-  }
-
-  /* Full-width submit button */
-  .submit-btn {
-    width: 100%;
-  }
-
-  /* Table responsiveness */
-  .table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  table {
-    min-width: 600px; /* Ensures table doesn't compress unreadably */
-  }
-
-  /* Search bar adjustment */
-  .search-container {
-    width: 100%;
-    margin-top: 12px;
-  }
-
-  .search-input {
     width: 100%;
   }
 }

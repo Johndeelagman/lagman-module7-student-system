@@ -1,12 +1,109 @@
+<template>
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-lg font-semibold text-slate-100">Register New Student</h2>
+        <p class="text-xs text-slate-400">Fill in the required academic credentials below</p>
+      </div>
+
+      <button 
+        @click="resetForm" 
+        type="button"
+        class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-xs text-slate-300 font-medium rounded-lg border border-slate-700 transition cursor-pointer"
+      >
+        + New Entry
+      </button>
+    </div>
+
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Student ID</label>
+          <input 
+            v-model="form.studentId"
+            @input="errors.studentId = ''"
+            type="text" 
+            placeholder="e.g. 2026-0001"
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition"
+          />
+          <p v-if="errors.studentId" class="text-xs text-rose-500 mt-1 font-medium">{{ errors.studentId }}</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+          <input 
+            v-model="form.fullName"
+            @input="errors.fullName = ''"
+            type="text" 
+            placeholder="e.g. Juan Cruz"
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition"
+          />
+          <p v-if="errors.fullName" class="text-xs text-rose-500 mt-1 font-medium">{{ errors.fullName }}</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Expanded Academic Programs -->
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Academic Program</label>
+          <select v-model="form.program" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition">
+            <option value="BSCS">BSCS (Computer Science)</option>
+            <option value="BSIT">BSIT (Information Tech)</option>
+            <option value="BSEMC">BSEMC (Entertainment & Multimedia)</option>
+            <option value="BSIS">BSIS (Information Systems)</option>
+            <option value="BSCpE">BSCpE (Computer Engineering)</option>
+            <option value="BDA">BDA (Data Analytics)</option>
+          </select>
+        </div>
+
+        <!-- Year Level -->
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Year Level</label>
+          <select v-model="form.yearLevel" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition">
+            <option value="1st Year">1st Year</option>
+            <option value="2nd Year">2nd Year</option>
+            <option value="3rd Year">3rd Year</option>
+            <option value="4th Year">4th Year</option>
+          </select>
+        </div>
+
+        <!-- Expanded Enrollment Statuses -->
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Enrollment Status</label>
+          <select v-model="form.status" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition">
+            <option value="Enrolled">Enrolled</option>
+            <option value="Inactive">Inactive</option>
+            <option value="On Leave">On Leave</option>
+            <option value="Graduated">Graduated</option>
+            <option value="Probation">Probation</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button 
+          type="submit" 
+          :disabled="isSubmitting"
+          class="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-sm rounded-xl transition duration-200 shadow-lg shadow-indigo-600/25 active:scale-[0.99] flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-50"
+        >
+          <svg v-if="isSubmitting" class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>{{ isSubmitting ? 'Saving Record...' : 'Submit Student Record' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
 <script setup>
-import { ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 
-const emit = defineEmits(['save-student'])
-const props = defineProps({
-  editingStudent: { type: Object, default: null }
-})
+const emit = defineEmits(['add-student'])
+const isSubmitting = ref(false)
 
-const form = ref({
+const form = reactive({
   studentId: '',
   fullName: '',
   program: 'BSCS',
@@ -14,104 +111,28 @@ const form = ref({
   status: 'Enrolled'
 })
 
-const errors = ref({})
+const errors = reactive({ studentId: '', fullName: '' })
 
-watch(() => props.editingStudent, (newVal) => {
-  if (newVal) form.value = { ...newVal }
-}, { immediate: true })
-
-const validate = () => {
-  errors.value = {}
-  if (!form.value.studentId.trim()) errors.value.studentId = 'Student ID is required.'
-  if (!form.value.fullName.trim()) errors.value.fullName = 'Full Name is required.'
-  return Object.keys(errors.value).length === 0
+const resetForm = () => {
+  form.studentId = ''
+  form.fullName = ''
+  form.program = 'BSCS'
+  form.yearLevel = '1st Year'
+  form.status = 'Enrolled'
+  errors.studentId = ''
+  errors.fullName = ''
 }
 
-const handleSubmit = () => {
-  if (!validate()) return
-  emit('save-student', { ...form.value })
-  form.value = { studentId: '', fullName: '', program: 'BSCS', yearLevel: '1st Year', status: 'Enrolled' }
-  errors.value = {}
+const handleSubmit = async () => {
+  errors.studentId = form.studentId ? '' : 'Student ID is required.'
+  errors.fullName = form.fullName ? '' : 'Full Name is required.'
+
+  if (!errors.studentId && !errors.fullName) {
+    isSubmitting.value = true
+    await new Promise(res => setTimeout(res, 250))
+    emit('add-student', { ...form })
+    resetForm()
+    isSubmitting.value = false
+  }
 }
 </script>
-
-<template>
-  <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm p-6 transition-colors duration-300">
-    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4 mb-5">
-      <div>
-        <h2 class="text-base font-semibold text-slate-900 dark:text-white">
-          {{ editingStudent ? 'Update Student Record' : 'Register New Student' }}
-        </h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Fill in the required academic credentials below</p>
-      </div>
-      <span class="text-xs text-slate-400 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700">
-        {{ editingStudent ? 'Editing Mode' : 'New Entry' }}
-      </span>
-    </div>
-
-    <form @submit.prevent="handleSubmit" class="space-y-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Student ID</label>
-          <input 
-            v-model="form.studentId" 
-            type="text" 
-            placeholder="e.g. 2026-0001" 
-            :disabled="!!editingStudent"
-            class="w-full bg-slate-50 dark:bg-slate-800/60 border rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 disabled:opacity-60 disabled:cursor-not-allowed"
-            :class="errors.studentId ? 'border-rose-400 focus:ring-rose-500/20 focus:border-rose-500' : 'border-slate-200 dark:border-slate-700'"
-          />
-          <p v-if="errors.studentId" class="text-rose-500 dark:text-rose-400 text-xs mt-1 font-medium">{{ errors.studentId }}</p>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Full Name</label>
-          <input 
-            v-model="form.fullName" 
-            type="text" 
-            placeholder="e.g. Juan Cruz" 
-            class="w-full bg-slate-50 dark:bg-slate-800/60 border rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
-            :class="errors.fullName ? 'border-rose-400 focus:ring-rose-500/20 focus:border-rose-500' : 'border-slate-200 dark:border-slate-700'"
-          />
-          <p v-if="errors.fullName" class="text-rose-500 dark:text-rose-400 text-xs mt-1 font-medium">{{ errors.fullName }}</p>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Academic Program</label>
-          <select v-model="form.program" class="w-full bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
-            <option class="dark:bg-slate-900">BSCS</option>
-            <option class="dark:bg-slate-900">BSIT</option>
-            <option class="dark:bg-slate-900">BSEMC</option>
-            <option class="dark:bg-slate-900">BSIS</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Year Level</label>
-          <select v-model="form.yearLevel" class="w-full bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
-            <option class="dark:bg-slate-900">1st Year</option>
-            <option class="dark:bg-slate-900">2nd Year</option>
-            <option class="dark:bg-slate-900">3rd Year</option>
-            <option class="dark:bg-slate-900">4th Year</option>
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Enrollment Status</label>
-        <select v-model="form.status" class="w-full bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-sm dark:text-white transition outline-none focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600">
-          <option class="dark:bg-slate-900">Enrolled</option>
-          <option class="dark:bg-slate-900">Inactive</option>
-          <option class="dark:bg-slate-900">On Leave</option>
-        </select>
-      </div>
-
-      <button 
-        type="submit" 
-        class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-medium py-2.5 rounded-xl text-sm transition-all shadow-sm active:scale-[0.99] mt-2 cursor-pointer"
-      >
-        {{ editingStudent ? 'Save Changes' : 'Submit Record' }}
-      </button>
-    </form>
-  </div>
-</template>

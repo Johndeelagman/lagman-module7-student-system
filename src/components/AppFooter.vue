@@ -1,10 +1,6 @@
 <template>
-  <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-6 px-6 text-center text-xs space-y-1.5 mt-auto">
-    <p class="font-medium text-slate-300">
-      Developer: <span class="text-indigo-400 font-semibold">John Dee</span> | Section: <span class="text-indigo-400 font-semibold">BSCS-3A</span>
-    </p>
-    <p class="text-slate-500 text-[11px]">
-      Student Record System Architecture — Integrated Module 6 Data Layer
-    </p>
+  <footer class="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-xs text-slate-500">
+    <p>Developer: <strong class="text-slate-300">John Dee</strong> | Section: <strong class="text-indigo-400">BSCS-3A</strong></p>
+    <p class="mt-1 text-[11px] text-slate-600">Student Record System Architecture — Integrated Module 6 Data Layer</p>
   </footer>
 </template>
