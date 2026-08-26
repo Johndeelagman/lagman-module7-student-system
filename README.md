@@ -105,3 +105,36 @@ README.md
  ├── 🛠️ Explanation of Correction Made
  ├── 🔄 Retesting & Regression Results  <-- [ Put it here ]
  └── 📸 Screenshots & Explanations
+## 📸 Application Screenshots & Execution Proof
+
+### 1. Main Dashboard View
+![Main Dashboard](./assets/01-dashboard.png)
+*Initial UI state displaying student list and navigation.*
+
+### 2. Add Student Modal
+![Add Student Modal](./assets/02-add-student.png)
+*Registration modal with form input fields.*
+
+### 3. Edit Student Record
+![Edit Student Record](./assets/03-edit-student.png)
+*Modal pre-populated with existing record data for updating.*
+
+### 4. Delete Confirmation Modal
+![Delete Modal](./assets/04-delete-modal.png)
+*Confirmation prompt triggered prior to record deletion.*
+
+### 5. Live Search Filtering
+![Search Functionality](./assets/05-search-filter.png)
+*Table updating in real-time based on search input.*
+
+### 6. Dark Theme Toggle
+![Dark Theme](./assets/06-dark-mode.png)
+*Interface switched to dark mode state.*
+
+### 7. Automated Unit Test Passing Run
+![Unit Test Results](./assets/07-test-results.png)
+*Terminal console output showing all 5 automated unit tests passing.*
+
+### 8. Bug Fix Verification
+![Bug Fix Verification](./assets/08-defect-fix.png)
+*Validation error rendered when invalid input is entered into the Student ID field.*
